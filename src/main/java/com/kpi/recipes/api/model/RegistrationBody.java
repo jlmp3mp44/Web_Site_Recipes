@@ -11,20 +11,16 @@ public class RegistrationBody {
     private String name;
     @NotBlank
     @NotNull
-
     private String surname;
     @NotBlank
     @NotNull
-
     private String patronymic;
     @NotBlank
     @NotNull
     @Email
-
     private String email;
     @NotNull
     private Date birthday;
-
     @NotNull
     private Long phone;
     @NotBlank

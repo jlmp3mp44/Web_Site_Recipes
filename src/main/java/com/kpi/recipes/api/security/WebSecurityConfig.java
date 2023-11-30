@@ -20,7 +20,7 @@ public class WebSecurityConfig {
         http.csrf(csrf->csrf.disable());
         http.addFilterBefore(jwtRequestFilter, AuthorizationFilter.class);
         http.authorizeHttpRequests(auth->auth.requestMatchers("/menus",
-                        "/categories", "auth/register", "auth/login").permitAll()
+                        "/categories", "/auth/register", "/auth/login").permitAll()
                 .anyRequest().authenticated());
 
         return http.build();
