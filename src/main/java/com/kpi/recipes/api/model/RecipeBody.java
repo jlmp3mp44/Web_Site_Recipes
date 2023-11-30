@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.List;
 
 public class RecipeBody {
-
-    @NotNull
     private User user;
     @NotBlank
     private String title;
