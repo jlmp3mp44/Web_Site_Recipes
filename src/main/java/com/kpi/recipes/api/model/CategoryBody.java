@@ -1,27 +1,24 @@
-package com.kpi.recipes.model;
+package com.kpi.recipes.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import com.kpi.recipes.model.Recipe;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "Categories")
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+public class CategoryBody {
+    @NotNull
     private Long id;
-    @Column(name = "name", length = 255, nullable = false, unique = true)
+    @NotNull
     private String name;
-    @Lob
-    @Column(name = "description", nullable = false)
+    @NotNull
     private String description;
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @NotNull
     private List<Recipe> recipes =  new ArrayList<>();
-
 
     public Long getId() {
         return id;
@@ -45,5 +42,13 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }
