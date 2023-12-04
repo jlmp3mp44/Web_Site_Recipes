@@ -29,6 +29,7 @@ public class Recipe {
         @JoinColumn(name = "CategoryId",insertable = false, updatable = false)
         private Category category;
 
+
         @ManyToMany(fetch = FetchType.LAZY)
         @JoinTable(
             name = "recipe_ingredients",
