@@ -27,7 +27,10 @@ public class CategoryService {
         }
 
         Category category =  new Category();
-
-        return recipe;
+        category.setName(categoryBody.getName());
+        category.setDescription(categoryBody.getDescription());
+        category.setRecipes(categoryBody.getRecipes());
+        category =  categoryDAO.save(category);
+        return category;
     }
 }

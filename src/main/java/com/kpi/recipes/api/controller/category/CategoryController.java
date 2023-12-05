@@ -1,10 +1,15 @@
 package com.kpi.recipes.api.controller.category;
 
+import com.kpi.recipes.api.exception.CategoryAlreadyExistException;
+import com.kpi.recipes.api.exception.UserAlreadyExistException;
+import com.kpi.recipes.api.model.CategoryBody;
+import com.kpi.recipes.api.model.RegistrationBody;
 import com.kpi.recipes.model.Category;
 import com.kpi.recipes.service.CategoryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,5 +25,15 @@ public class CategoryController {
     @GetMapping
     public List<Category> getCategories(){
         return categoryService.getCategories();
+    }
+
+    @PostMapping("/categories/add")
+    public ResponseEntity registerUser(@Valid @RequestBody CategoryBody categoryBody) {
+        try {
+            categoryService.addCategory(categoryBody);
+            return ResponseEntity.ok().build();
+        } catch (CategoryAlreadyExistException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 }
