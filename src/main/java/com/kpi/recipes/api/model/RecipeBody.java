@@ -23,11 +23,8 @@ public class RecipeBody {
     private Long time;
     @NotNull
     private Long calorie;
-    @NotNull
     private Category category;
-    @NotNull
     private List<IngredientRecipe> ingredientRecipes;
-    @NotNull
     private MenuRecipe menuRecipe;
 
     public User getUser() {

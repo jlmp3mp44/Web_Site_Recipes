@@ -27,7 +27,7 @@ public class CategoryController {
         return categoryService.getCategories();
     }
 
-    @PostMapping("/categories/add")
+    @PostMapping("/add")
     public ResponseEntity registerUser(@Valid @RequestBody CategoryBody categoryBody) {
         try {
             categoryService.addCategory(categoryBody);

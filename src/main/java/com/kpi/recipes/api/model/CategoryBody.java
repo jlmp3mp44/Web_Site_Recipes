@@ -11,22 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryBody {
-    @NotNull
-    private Long id;
+
     @NotNull
     private String name;
     @NotNull
     private String description;
-    @NotNull
     private List<Recipe> recipes =  new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
