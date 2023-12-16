@@ -23,7 +23,6 @@ public class RecipeBody {
     private Long time;
     @NotNull
     private Long calorie;
-    @NotNull
     private Category category;
     @NotNull
     private List<IngredientRecipe> ingredientRecipes;
