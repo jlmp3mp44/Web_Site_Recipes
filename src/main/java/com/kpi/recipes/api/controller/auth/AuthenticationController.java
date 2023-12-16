@@ -54,6 +54,9 @@ public class AuthenticationController {
     @PostMapping("/logout")
     public ResponseEntity logout(HttpServletRequest request) {
         String token = extractTokenFromRequest(request);
+        if (token != null) {
+            jwtService.addToBlacklist(token);
+        }
         return ResponseEntity.ok("Logout successful");
     }
 

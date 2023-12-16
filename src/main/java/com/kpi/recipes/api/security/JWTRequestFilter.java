@@ -34,6 +34,10 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         String tokenHeader = request.getHeader("Authorization");
         if(tokenHeader!=null && tokenHeader.startsWith("Bearer ")){
             String token = tokenHeader.substring(7);
+            if (jwtService.isBlacklisted(token)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
             try {
                 String username = jwtService.getUsername(token);
                 Optional<User> optionalUser = userDAO.findByUsernameIgnoreCase(username);
