@@ -1,6 +1,7 @@
 package com.kpi.recipes.service;
 
 import com.kpi.recipes.api.exception.RecipeAlreadyExistException;
+import com.kpi.recipes.api.exception.RecipeNotFoundException;
 import com.kpi.recipes.api.model.RecipeBody;
 import com.kpi.recipes.model.Category;
 import com.kpi.recipes.model.Recipe;
@@ -39,4 +40,32 @@ public class RecipeService {
         recipe =  recipeDAO.save(recipe);
         return recipe;
     }
+    public Recipe updateRecipe(Long recipeId, RecipeBody updatedRecipeBody) throws RecipeNotFoundException, RecipeAlreadyExistException {
+        Optional<Recipe> optionalRecipe = recipeDAO.findById(recipeId);
+
+        if (optionalRecipe.isPresent()) {
+            Recipe existingRecipe = optionalRecipe.get();
+
+            // Check if the title is being updated to a title that already exists
+            if (!existingRecipe.getTitle().equalsIgnoreCase(updatedRecipeBody.getTitle())
+                    && recipeDAO.findByTitleIgnoreCase(updatedRecipeBody.getTitle()).isPresent()) {
+                throw new RecipeAlreadyExistException("Recipe with the same title already exists.");
+            }
+
+            // Update the recipe fields with the new values
+            existingRecipe.setTitle(updatedRecipeBody.getTitle());
+            existingRecipe.setDescription(updatedRecipeBody.getDescription());
+            existingRecipe.setTime(updatedRecipeBody.getTime());
+            existingRecipe.setCalorie(updatedRecipeBody.getCalorie());
+            existingRecipe.setCategory(updatedRecipeBody.getCategory());
+            existingRecipe.setRecipeIngredients(updatedRecipeBody.getIngredientRecipes());
+            existingRecipe.setMenuRecipe(updatedRecipeBody.getMenuRecipe());
+
+            // Save the updated recipe
+            return recipeDAO.save(existingRecipe);
+        } else {
+            throw new RecipeNotFoundException("Recipe not found with id: " + recipeId);
+        }
+    }
 }
+

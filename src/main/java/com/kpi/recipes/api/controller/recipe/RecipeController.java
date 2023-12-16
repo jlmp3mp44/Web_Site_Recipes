@@ -1,5 +1,6 @@
 package com.kpi.recipes.api.controller.recipe;
 import com.kpi.recipes.api.exception.RecipeAlreadyExistException;
+import com.kpi.recipes.api.exception.RecipeNotFoundException;
 import com.kpi.recipes.api.model.RecipeBody;
 import com.kpi.recipes.model.Recipe;
 import com.kpi.recipes.model.User;
@@ -37,6 +38,24 @@ public class RecipeController {
         try {
             recipeService.addRecipes(user, recipeBody);
             return ResponseEntity.ok().build();
+        } catch (RecipeAlreadyExistException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
+    @PutMapping("/{recipeId}")
+    public ResponseEntity updateRecipe(
+            @PathVariable Long recipeId,
+            @Valid @RequestBody RecipeBody updatedRecipeBody) {
+        User user = authorizationService.getCurrentUser();
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        try {
+            Recipe updatedRecipe = recipeService.updateRecipe(recipeId, updatedRecipeBody);
+            return ResponseEntity.ok(updatedRecipe);
+        } catch (RecipeNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (RecipeAlreadyExistException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }

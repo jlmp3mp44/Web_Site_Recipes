@@ -24,9 +24,7 @@ public class RecipeBody {
     @NotNull
     private Long calorie;
     private Category category;
-    @NotNull
     private List<IngredientRecipe> ingredientRecipes;
-    @NotNull
     private MenuRecipe menuRecipe;
 
     public User getUser() {
