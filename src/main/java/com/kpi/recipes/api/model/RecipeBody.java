@@ -1,9 +1,6 @@
 package com.kpi.recipes.api.model;
 
-import com.kpi.recipes.model.Category;
-import com.kpi.recipes.model.IngredientRecipe;
-import com.kpi.recipes.model.MenuRecipe;
-import com.kpi.recipes.model.User;
+import com.kpi.recipes.model.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,9 +20,11 @@ public class RecipeBody {
     private Long time;
     @NotNull
     private Long calorie;
+    @NotNull
     private Category category;
-    private List<IngredientRecipe> ingredientRecipes;
+    private List<Ingredient> ingredients;
     private MenuRecipe menuRecipe;
+    private Image image;
 
     public User getUser() {
         return user;
@@ -75,12 +74,12 @@ public class RecipeBody {
         this.category = category;
     }
 
-    public List<IngredientRecipe> getIngredientRecipes() {
-        return ingredientRecipes;
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredientRecipes(List<IngredientRecipe> ingredientRecipes) {
-        this.ingredientRecipes = ingredientRecipes;
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public MenuRecipe getMenuRecipe() {
@@ -89,5 +88,13 @@ public class RecipeBody {
 
     public void setMenuRecipe(MenuRecipe menuRecipe) {
         this.menuRecipe = menuRecipe;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

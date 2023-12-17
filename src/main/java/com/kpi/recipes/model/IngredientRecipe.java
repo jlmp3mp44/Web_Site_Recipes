@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Recipes_Ingredients")
+@Table(name = "recipe_ingredients")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class IngredientRecipe {
     @Id
@@ -16,19 +16,20 @@ public class IngredientRecipe {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToMany(mappedBy = "ingredientRecipes")
-    private List<Recipe> recipes =  new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
 
-    @OneToOne
-    @JoinColumn(name = "ingredientId", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
-    public List<Recipe> getRecipe() {
-        return recipes;
+    public Recipe getRecipe() {
+        return recipe;
     }
 
-    public void setRecipe(List<Recipe> recipes) {
-        this.recipes = recipes;
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public Ingredient getIngredient() {

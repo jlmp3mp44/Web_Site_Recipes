@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface CategoryDAO extends ListCrudRepository<Category, Long> {
     Optional<Category> findAllByName(String name);
+    Optional<Category> findByNameIgnoreCase(String name);
 }
