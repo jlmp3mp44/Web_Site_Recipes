@@ -26,7 +26,7 @@ public class Recipe {
         @Column(name = "calorie", nullable = false)
         private Long calorie;
         @ManyToOne()
-        @JoinColumn(name = "CategoryId",insertable = false, updatable = false)
+        @JoinColumn(name = "CategoryId")
         private Category category;
 
 
@@ -35,13 +35,15 @@ public class Recipe {
             name = "recipe_ingredients",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-
-        private List<IngredientRecipe> ingredientRecipes =  new ArrayList<>();
+        private List<Ingredient> ingredients =  new ArrayList<>();
 
         @ManyToOne
         @JoinColumn(name = "menuRecipeId", insertable = false, updatable = false)
-
         private MenuRecipe menuRecipe;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "recipe_image", referencedColumnName = "id")
+    private Image image;
 
 
     public Long getId() {
@@ -91,12 +93,12 @@ public class Recipe {
         this.user = user;
     }
 
-    public List<IngredientRecipe> getRecipeIngredients() {
-        return ingredientRecipes;
+    public List<Ingredient> getRecipeIngredients() {
+        return ingredients;
     }
 
-    public void setRecipeIngredients(List<IngredientRecipe> ingredients) {
-        this.ingredientRecipes = ingredients;
+    public void setRecipeIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public Category getCategory() {
@@ -113,5 +115,21 @@ public class Recipe {
 
     public void setMenuRecipe(MenuRecipe menuRecipe) {
         this.menuRecipe = menuRecipe;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

@@ -3,6 +3,9 @@ package com.kpi.recipes.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "Ingredients")
 public class Ingredient {
@@ -14,10 +17,9 @@ public class Ingredient {
     private String name;
     @Column(name = "price", nullable = false)
     private Long price;
-    @JsonIgnore
-    @OneToOne(mappedBy = "ingredient", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private IngredientRecipe ingredientRecipe =  new IngredientRecipe();
 
+    @ManyToMany(mappedBy = "ingredients")
+    private List<Recipe> recipes = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -43,11 +45,7 @@ public class Ingredient {
         this.price = price;
     }
 
-    public IngredientRecipe getRecipeIngredient() {
-        return ingredientRecipe;
-    }
-
-    public void setRecipeIngredient(IngredientRecipe ingredientRecipe) {
-        this.ingredientRecipe = ingredientRecipe;
+    public List<Recipe> getRecipes() {
+        return recipes;
     }
 }
